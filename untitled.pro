@@ -32,4 +32,18 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 DISTFILES += \
+    release/Qt5Core.dll \
+    release/Qt5Gui.dll \
+    release/Qt5Widgets.dll \
+    release/UniBase Computer.exe \
+    release/libgcc_s_seh-1.dll \
+    release/libstdc++-6.dll \
+    release/libwinpthread-1.dll \
+    release/plugins/platforms/libEGL.dll \
+    release/plugins/platforms/qdirect2d.dll \
+    release/plugins/platforms/qminimal.dll \
+    release/plugins/platforms/qoffscreen.dll \
+    release/plugins/platforms/qwindows.dll \
+    release/qoffscreen.dll \
+    release/qt.conf \
     resources.rc
