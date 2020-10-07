@@ -15,37 +15,56 @@ MainWindow::MainWindow(QWidget *parent)
 
 void MainWindow::handleComputeButton()
 {
+    isValidInput = true;
     Output = ui->Lbl_result;
-    QTextEdit *input1 = ui->input_N1,
-            *input2 = ui->input_N3;
 
     controller *controllModule = new controller();
 
-    QString input_n1 = input1->toPlainText(),
-            input_n2 = input2->toPlainText();
+    QString input_n1 = ui->input_N1->toPlainText(),
+            input_n2 = ui->input_N3->toPlainText();
 
-    controllModule->SetInput(input_n1.toStdString(), input_n2.toStdString());
-    ui->Lbl_operation->setText(controllModule->GetInfo().c_str());
-    controllModule->Select();
+    std::list<QString> strings = {input_n1, input_n2};
+    for(QString s: strings) if(s.toStdString().empty())
+    {
+        isValidInput = false;
+        break;
+    }
 
-    string text = controllModule->Print();
-    Output->setText(text.c_str());
+    if(isValidInput)
+    {
+        controllModule->SetInput(input_n1.toStdString(), input_n2.toStdString());
+        ui->Lbl_operation->setText(controllModule->GetInfo().c_str());
+        controllModule->Select();
+
+        string out = controllModule->Print();
+        Output->setText(out.c_str());
+    }
+    else Output->setText("Недопустимый ввод");
 }
 void MainWindow::handleConvertButton()
 {
+    isValidInput = true;
     Output = ui->Lbl_result2;
-    QTextEdit *input1 = ui->input_C1,
-            *input2 = ui->input_C2,
-            *input3 = ui->input_C3;
 
     controller *controllModule = new controller();
 
-    QString input_n1 = input1->toPlainText(),
-            input_n2 = input2->toPlainText(),
-            input_n3 = input3->toPlainText();
+    QString input_n1 = ui->input_C1->toPlainText(),
+            input_n2 = ui->input_C2->toPlainText(),
+            input_n3 = ui->input_C3->toPlainText();
 
-    string text = controllModule->Convert(input_n1.toStdString(), stoi(input_n2.toStdString()), stoi(input_n3.toStdString()));
-    Output->setText(text.c_str());
+    std::list<QString> strings = {input_n1, input_n2, input_n3};
+    for(QString s: strings) if(s.toStdString().empty())
+    {
+        isValidInput = false;
+        break;
+    }
+
+    if(isValidInput)
+    {
+        string out = controllModule->Convert(input_n1.toStdString(), stoi(input_n2.toStdString()), stoi(input_n3.toStdString()));
+        Output->setText(out.c_str());
+    }
+    else Output->setText("Недопустимый ввод");
 }
 
 MainWindow::~MainWindow()

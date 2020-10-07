@@ -23,5 +23,6 @@ private slots:
 private:
     Ui::MainWindow *ui;
     QLabel *Output;
+    bool isValidInput = true;
 };
 #endif // MAINWINDOW_H
