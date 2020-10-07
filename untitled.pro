@@ -36,6 +36,8 @@ DISTFILES += \
     release/Qt5Gui.dll \
     release/Qt5Widgets.dll \
     release/UniBase Computer.exe \
+    release/UniBaseComputer_linux \
+    release/UniBaseComputer_v3.exe \
     release/libgcc_s_seh-1.dll \
     release/libstdc++-6.dll \
     release/libwinpthread-1.dll \
