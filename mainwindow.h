@@ -19,6 +19,7 @@ public:
 private slots:
     void handleComputeButton();
     void handleConvertButton();
+    void handleConvertDoubleButton();
 
 private:
     Ui::MainWindow *ui;

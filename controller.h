@@ -12,6 +12,8 @@ public:
     controller();
     int Convert();
     std::string Convert(std::string input, int inBase, int outBase);
+    std::string ConvertToDouble(std::string input, int base);
+    std::string ConvertFromDouble(std::string input);
     int Add();
     int Take();
     int Mult();

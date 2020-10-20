@@ -10,6 +10,7 @@ MainWindow::MainWindow(QWidget *parent)
     this->setFixedSize(this->size());
     connect(ui->Btn_compute, SIGNAL (released()), this, SLOT (handleComputeButton()));
     connect(ui->Btn_convert, SIGNAL (released()), this, SLOT (handleConvertButton()));
+    connect(ui->Btn_convert_d, SIGNAL (released()), this, SLOT (handleConvertDoubleButton()));
     this->setWindowTitle("UniBase Computer");
 }
 
@@ -62,6 +63,32 @@ void MainWindow::handleConvertButton()
     if(isValidInput)
     {
         string out = controllModule->Convert(input_n1.toStdString(), stoi(input_n2.toStdString()), stoi(input_n3.toStdString()));
+        Output->setText(out.c_str());
+    }
+    else Output->setText("Недопустимый ввод");
+}
+void MainWindow::handleConvertDoubleButton()
+{
+    isValidInput = true;
+    bool toDouble = ui->rBtn_mv->isChecked();
+    Output = ui->Lbl_result3;
+
+    controller *controllModule = new controller();
+
+    QString input_n1 = ui->input_D1->toPlainText(),
+            input_n2 = ui->input_D2->toPlainText();
+
+    std::list<QString> strings = {input_n1, input_n2};
+    for(QString s: strings) if(s.toStdString().empty())
+    {
+        isValidInput = false;
+        break;
+    }
+
+    if(isValidInput)
+    {
+        string out = (toDouble) ? controllModule->ConvertToDouble(input_n1.toStdString(), stoi(input_n2.toStdString()))
+                                : controllModule->ConvertFromDouble(input_n1.toStdString());
         Output->setText(out.c_str());
     }
     else Output->setText("Недопустимый ввод");

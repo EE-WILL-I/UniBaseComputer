@@ -15,7 +15,7 @@ controller::controller()
 string controller::Convert(string input, int inBase, int outBase)
 {
     bool isReal = false;
-    for (int i = 0; i < (int)input.length(); ++i)
+    for (size_t i = 0; i < input.length(); ++i)
     {
         if (cm->IsReal(input[i]))
         {
@@ -24,8 +24,13 @@ string controller::Convert(string input, int inBase, int outBase)
         }
     }
     string out;
-    if (isReal) out = cm->ConvertBaseReal(input, inBase, outBase);
-    else out = cm->ConvertBaseInt(input, inBase, outBase);
+    out = (isReal) ? cm->ConvertBaseReal(input, inBase, outBase) : cm->ConvertBaseInt(input, inBase, outBase);
+    if(input[0] == '-')
+    {
+        num1 = out, num2 = to_string(1), num3 = to_string(2);
+        Add();
+        return OUTPUT;
+    }
 
     return out;
 }
@@ -70,9 +75,30 @@ int controller::Convert()
     string out;
 
     out = Convert(num1, stoi(num2), stoi(num3));
-    OUTPUT = num1 + "(" + num2 + ") = " + out + "(" + num3 + ")" + '\n';
 
+    OUTPUT = num1 + "(" + num2 + ") = " + out + "(" + num3 + ")" + '\n';
     return 0;
+}
+string controller::ConvertToDouble(string input, int base)
+{
+    string sign, binary, out;
+    if(input[0] == '-')
+    {
+        sign = "1";
+        input[0] = '0';
+    }
+    else sign = "0";
+
+    binary = Convert(input, base, 2);
+    out = cm->ConvertToDouble(binary, sign);
+
+    return out;
+}
+string controller::ConvertFromDouble(string input)
+{
+    string out;
+    out = cm->ConvertFromDouble(input);
+    return out;
 }
 int controller::Add()
 {
